@@ -1,4 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tunduk/presentation/screens/history_treatment/history_treatment.dart';
+import 'package:tunduk/provider/main_provider/provider.dart';
+import 'package:tunduk/provider/show_modal_provider/provider.dart';
+
+import 'presentation/screens/home_screen.dart';
+import 'presentation/screens/history_services/history_services.dart';
+import 'provider/time_date/time_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -6,39 +14,29 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Tunduk'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: const Center(
-        child: Text('WElCOME TO TUNDUK'),
-      ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<BottomList>(
+        create: (BuildContext context) => BottomList()),
+        ChangeNotifierProvider<TimeDateProvider>(
+        create: (BuildContext context) => TimeDateProvider()),
+        ChangeNotifierProvider<MainProvider>(
+        create: (BuildContext context) => MainProvider())
+    ],
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          routes: {
+            '/': (context) => const HomeScreen(title: 'Tunduk'),
+            '/second': (context) => const SecondScreen(),
+            '/third': (context) => const ThirdScreen()
+          },
+        ),
     );
   }
 }
