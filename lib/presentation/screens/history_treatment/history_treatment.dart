@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tunduk/provider/main_provider/provider.dart';
 
 import '../../../api/network.dart';
 import '../../../methods/build_listview.dart';
+import '../../../model/model.dart';
+import '../../../provider/main_provider/provider.dart';
 import '../../../provider/show_modal_provider/provider.dart';
 import '../../widgets/chips_bar_widget.dart';
 import '../../widgets/date_chip_widget.dart';
 
-class ThirdScreen extends StatefulWidget {
-  const ThirdScreen({super.key});
+class SecondScreen extends StatefulWidget {
+  const SecondScreen({super.key});
 
   @override
-  State<ThirdScreen> createState() => _SecondScreenState();
+  State<SecondScreen> createState() => _SecondScreenState();
 }
 
-class _SecondScreenState extends State<ThirdScreen> {
+class _SecondScreenState extends State<SecondScreen> {
   DateTime? selectedDateTime ;
   bool pressed = false;
   late Future data;
@@ -28,7 +29,6 @@ class _SecondScreenState extends State<ThirdScreen> {
   @override
   Widget build(BuildContext context) {
     var bottomList = Provider.of<BottomList>(context);
-    // var titleProvider = Provider.of<MainProvider>(context).name;
     var titleProvider = context.watch<MainProvider>().name;
     return SafeArea(
       child: Scaffold(
@@ -43,13 +43,13 @@ class _SecondScreenState extends State<ThirdScreen> {
                   }),
                   icon: const Icon(Icons.arrow_back),
                 ),
-                const SizedBox(width: 20),
+                const SizedBox(width: 50),
                  SizedBox(
                     height: 50,
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 10),
                       child: Text(
-                        titleProvider,
+                      titleProvider,
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
@@ -71,18 +71,18 @@ class _SecondScreenState extends State<ThirdScreen> {
                 ),
               ),
             ),
-            Expanded(
-              child: FutureBuilder(
-                  future: getData(),
-                  builder: (context,AsyncSnapshot snapshot){
-                    if(snapshot.hasData){
-                      return buildListView(snapshot, context);
-                    }
-                    return Center(
-                        child: CircularProgressIndicator()
-                    );
-                  }),
-            ),
+                 Expanded(
+                   child: FutureBuilder(
+                      future: getData(),
+                      builder: (context,AsyncSnapshot snapshot){
+                        if(snapshot.hasData){
+                          return buildListView(snapshot, context);
+                        }
+                        return Center(
+                            child: CircularProgressIndicator()
+                        );
+                      }),
+                 ),
           ],
         ),
       ),
